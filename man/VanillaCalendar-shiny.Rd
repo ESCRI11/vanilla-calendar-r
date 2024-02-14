@@ -6,7 +6,7 @@
 \alias{renderVanillaCalendar}
 \title{Shiny bindings for VanillaCalendar}
 \usage{
-VanillaCalendarOutput(outputId, width = "100\%", height = "400px")
+VanillaCalendarOutput(outputId, width = "1000px", height = "400px")
 
 renderVanillaCalendar(expr, env = parent.frame(), quoted = FALSE)
 }

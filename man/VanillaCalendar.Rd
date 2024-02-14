@@ -4,7 +4,7 @@
 \alias{VanillaCalendar}
 \title{<Add Title>}
 \usage{
-VanillaCalendar(message, width = NULL, height = NULL, elementId = NULL)
+VanillaCalendar(options, width = NULL, height = NULL, elementId = NULL)
 }
 \description{
 <Add Description>

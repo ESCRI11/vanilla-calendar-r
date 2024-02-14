@@ -6,11 +6,11 @@ HTMLWidgets.widget({
 
   factory: function(el, width, height) {
 
-    var calendar = new VanillaCalendar('#' + el.id);
-
-    return {
+    return {  
 
       renderValue: function(x) {
+
+        var calendar = new VanillaCalendar('#' + el.id, x.options || {});
 
         calendar.init();
 
