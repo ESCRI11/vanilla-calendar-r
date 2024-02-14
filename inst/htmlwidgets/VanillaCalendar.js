@@ -10,6 +10,12 @@ HTMLWidgets.widget({
 
       renderValue: function(x) {
 
+        x.options.actions = {
+          clickDay(event, self) {
+            Shiny.onInputChange(el.id + "_selected", self.selectedDates);
+          },
+        }
+
         var calendar = new VanillaCalendar('#' + el.id, x.options || {});
 
         calendar.init();
