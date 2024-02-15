@@ -14,6 +14,15 @@ HTMLWidgets.widget({
           clickDay(event, self) {
             Shiny.onInputChange(el.id + "_selected", self.selectedDates);
           },
+          clickMonth(event, self) {
+            Shiny.onInputChange(el.id + "_selected_month", self.selectedMonth);
+          },
+          clickYear(event, self) {
+            Shiny.onInputChange(el.id + "_selected_year", self.selectedYear);
+          },
+          clickArrow(event, self) {
+            Shiny.onInputChange(el.id + "_selected_arrow", self.selectedYear + "-" + (self.selectedMonth + 1) + "-" + "1");
+          },
         }
 
         var calendar = new VanillaCalendar('#' + el.id, x.options || {});
