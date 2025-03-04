@@ -1,8 +1,8 @@
 Package: VanillaCalendar
 Title: Interactive Calendar Widget for R and Shiny
 Version: 1.0.0
-Authors@R: 
-    person("Xavier", "Escribà Montagut", email = "xavier.escriba.montagut@gmail.com", role = c("aut", "cre"))
+Authors@R:
+    person(given = "Xavier", family = "Escribà Montagut", email = "xavier.escriba.montagut@gmail.com", role = c("aut", "cre"))
 Description: An R interface to the Vanilla Calendar Pro JavaScript library for creating
     interactive and customizable calendar widgets. The package enables integration
     of modern calendar components in R and Shiny applications with support for various
