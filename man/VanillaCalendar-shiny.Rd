@@ -28,3 +28,30 @@ is useful if you want to save an expression in a variable.}
 Output and render functions for using VanillaCalendar within Shiny
 applications and interactive Rmd documents.
 }
+\examples{
+# Only run examples in interactive R sessions
+if (interactive()) {
+  library(shiny)
+  library(VanillaCalendar)
+  
+  ui <- fluidPage(
+    VanillaCalendarOutput("calendar")
+  )
+  
+  server <- function(input, output) {
+    output$calendar <- renderVanillaCalendar({
+      VanillaCalendar(
+        options = list(
+          type = "default",
+          settings = list(
+            lang = "en"
+          )
+        )
+      )
+    })
+  }
+  
+  shinyApp(ui, server)
+}
+
+}

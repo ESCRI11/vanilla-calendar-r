@@ -18,3 +18,31 @@ VanillaCalendar(options, width = NULL, height = NULL, elementId = NULL)
 \description{
 Creates a Vanilla Calendar widget for use in R and Shiny applications.
 }
+\examples{
+# Basic calendar with default settings
+if (interactive()) {
+  VanillaCalendar(options = list())
+}
+
+# Calendar with custom settings
+if (interactive()) {
+  VanillaCalendar(
+    options = list(
+      type = "default",
+      visibility = "visible",
+      settings = list(
+        lang = "en",
+        selection = list(
+          day = "single"
+        ),
+        visibility = list(
+          theme = "light"
+        )
+      )
+    ),
+    width = "500px",
+    height = "400px"
+  )
+}
+
+}
