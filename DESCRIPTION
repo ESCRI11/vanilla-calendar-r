@@ -1,12 +1,17 @@
 Package: VanillaCalendar
-Title: What the Package Does (One Line, Title Case)
+Title: Interactive Calendar Widget for R and Shiny
 Version: 0.0.0.9001
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+    person("Xavier", "Escribà Montagut", email = "xavier.escriba.montagut@gmail.com", role = c("aut", "cre"))
+Description: An R interface to the Vanilla Calendar Pro JavaScript library for creating
+    interactive and customizable calendar widgets. The package enables integration
+    of modern calendar components in R and Shiny applications with support for various
+    display options and event handling capabilities.
+URL: https://github.com/ESCRI11/vanilla-calendar-r
+BugReports: https://github.com/ESCRI11/vanilla-calendar-r/issues
+License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.1
+RoxygenNote: 7.3.1
+Imports:
+    htmlwidgets

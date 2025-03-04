@@ -1,6 +1,11 @@
-#' <Add Title>
+#' Vanilla Calendar Widget
 #'
-#' <Add Description>
+#' Creates a Vanilla Calendar widget for use in R and Shiny applications.
+#'
+#' @param options A list of options to configure the calendar widget
+#' @param width The width of the widget. Must be a valid CSS unit (like '100%', '400px', 'auto') or a number, which will be coerced to a string and have 'px' appended.
+#' @param height The height of the widget. Must be a valid CSS unit (like '100%', '400px', 'auto') or a number, which will be coerced to a string and have 'px' appended.
+#' @param elementId An optional ID for the widget element
 #'
 #' @import htmlwidgets
 #'

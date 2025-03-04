@@ -2,10 +2,19 @@
 % Please edit documentation in R/VanillaCalendar.R
 \name{VanillaCalendar}
 \alias{VanillaCalendar}
-\title{<Add Title>}
+\title{Vanilla Calendar Widget}
 \usage{
 VanillaCalendar(options, width = NULL, height = NULL, elementId = NULL)
 }
+\arguments{
+\item{options}{A list of options to configure the calendar widget}
+
+\item{width}{The width of the widget. Must be a valid CSS unit (like '100\%', '400px', 'auto') or a number, which will be coerced to a string and have 'px' appended.}
+
+\item{height}{The height of the widget. Must be a valid CSS unit (like '100\%', '400px', 'auto') or a number, which will be coerced to a string and have 'px' appended.}
+
+\item{elementId}{An optional ID for the widget element}
+}
 \description{
-<Add Description>
+Creates a Vanilla Calendar widget for use in R and Shiny applications.
 }
