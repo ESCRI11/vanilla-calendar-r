@@ -7,6 +7,33 @@
 #' @param height The height of the widget. Must be a valid CSS unit (like '100%', '400px', 'auto') or a number, which will be coerced to a string and have 'px' appended.
 #' @param elementId An optional ID for the widget element
 #'
+#' @examples
+#' # Basic calendar with default settings
+#' if (interactive()) {
+#'   VanillaCalendar(options = list())
+#' }
+#'
+#' # Calendar with custom settings
+#' if (interactive()) {
+#'   VanillaCalendar(
+#'     options = list(
+#'       type = "default",
+#'       visibility = "visible",
+#'       settings = list(
+#'         lang = "en",
+#'         selection = list(
+#'           day = "single"
+#'         ),
+#'         visibility = list(
+#'           theme = "light"
+#'         )
+#'       )
+#'     ),
+#'     width = "500px",
+#'     height = "400px"
+#'   )
+#' }
+#'
 #' @import htmlwidgets
 #'
 #' @export
@@ -41,6 +68,32 @@ VanillaCalendar <- function(options, width = NULL, height = NULL, elementId = NU
 #' @param env The environment in which to evaluate \code{expr}.
 #' @param quoted Is \code{expr} a quoted expression (with \code{quote()})? This
 #'   is useful if you want to save an expression in a variable.
+#'
+#' @examples
+#' # Only run examples in interactive R sessions
+#' if (interactive()) {
+#'   library(shiny)
+#'   library(VanillaCalendar)
+#'   
+#'   ui <- fluidPage(
+#'     VanillaCalendarOutput("calendar")
+#'   )
+#'   
+#'   server <- function(input, output) {
+#'     output$calendar <- renderVanillaCalendar({
+#'       VanillaCalendar(
+#'         options = list(
+#'           type = "default",
+#'           settings = list(
+#'             lang = "en"
+#'           )
+#'         )
+#'       )
+#'     })
+#'   }
+#'   
+#'   shinyApp(ui, server)
+#' }
 #'
 #' @name VanillaCalendar-shiny
 #'
