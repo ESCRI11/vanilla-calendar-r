@@ -32,9 +32,12 @@ vcDestroy(proxy)
 \item{options}{A named list of options to apply, handled exactly as in
 \code{\link[=VanillaCalendar]{VanillaCalendar()}}.}
 
-\item{reset}{Optional named list of parts to reset when applying the change,
-with any of the logical entries \code{year}, \code{month}, \code{dates}, \code{time} and
-\code{locale}, e.g. \code{list(dates = TRUE)}.}
+\item{reset}{Optional named list overriding which parts of the calendar are
+reset to their option values, with any of the logical entries \code{year},
+\code{month}, \code{dates}, \code{time} and \code{locale}. By default only the parts you are
+actually setting are reset, so \code{vcSet(proxy, list(selectedTheme = "dark"))}
+leaves the user's selection and the displayed month alone. Pass
+\code{list(dates = TRUE)} to clear a selection you are not replacing.}
 }
 \value{
 The proxy object, invisibly, so calls can be piped.

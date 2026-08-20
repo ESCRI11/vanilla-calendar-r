@@ -25,7 +25,7 @@
 # serialise as a JSON array, or the library throws.
 .vc_array_options <- c(
   "selectedDates", "disableDates", "enableDates", "selectedHolidays",
-  "disableWeekdays", "selectedWeekends", "positionToInput"
+  "disableWeekdays", "selectedWeekends"
 )
 
 # Dates the library wants as "YYYY-MM-DD" strings, never ISO8601 timestamps.

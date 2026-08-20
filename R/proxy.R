@@ -13,9 +13,12 @@
 #' @param proxy A `VanillaCalendarProxy` object.
 #' @param options A named list of options to apply, handled exactly as in
 #'   [VanillaCalendar()].
-#' @param reset Optional named list of parts to reset when applying the change,
-#'   with any of the logical entries `year`, `month`, `dates`, `time` and
-#'   `locale`, e.g. `list(dates = TRUE)`.
+#' @param reset Optional named list overriding which parts of the calendar are
+#'   reset to their option values, with any of the logical entries `year`,
+#'   `month`, `dates`, `time` and `locale`. By default only the parts you are
+#'   actually setting are reset, so `vcSet(proxy, list(selectedTheme = "dark"))`
+#'   leaves the user's selection and the displayed month alone. Pass
+#'   `list(dates = TRUE)` to clear a selection you are not replacing.
 #'
 #' @return The proxy object, invisibly, so calls can be piped.
 #'
@@ -76,18 +79,42 @@ VanillaCalendarProxy <- function(id, session = shiny::getDefaultReactiveDomain()
   invisible(proxy)
 }
 
+# The library resets the year, month, dates, time and locale to their option
+# values unless told otherwise, which would throw away what the user has done.
+# Reset only what this call is actually setting.
+.vc_reset <- function(options, reset) {
+  auto <- list(year = "selectedYear", month = "selectedMonth",
+               dates = "selectedDates", time = "selectedTime", locale = "locale")
+  auto <- lapply(auto, function(option) option %in% names(options))
+  if (length(reset)) auto[names(reset)] <- reset
+  auto
+}
+
+# Callbacks would arrive as plain strings: sendCustomMessage() has no
+# equivalent of the widget payload's JS evaluation step.
+.vc_check_js <- function(options) {
+  js <- vapply(options, inherits, logical(1), "JS_EVAL")
+  if (any(js)) {
+    warning("JavaScript callbacks cannot be sent through a proxy; ",
+            toString(names(options)[js]), " ignored. Set them on the calendar ",
+            "with VanillaCalendar() instead.", call. = FALSE)
+  }
+  options[!js]
+}
+
 #' @rdname VanillaCalendarProxy
 #' @description `vcSet()` applies new options to the calendar.
 #' @export
 vcSet <- function(proxy, options, reset = NULL) {
-  .vc_call(proxy, "set", .vc_fix(options), reset)
+  options <- .vc_check_js(.vc_fix(options))
+  .vc_call(proxy, "set", options, .vc_reset(options, reset))
 }
 
 #' @rdname VanillaCalendarProxy
 #' @description `vcUpdate()` re-renders the calendar with its current options.
 #' @export
 vcUpdate <- function(proxy, reset = NULL) {
-  .vc_call(proxy, "update", reset)
+  .vc_call(proxy, "update", .vc_reset(list(), reset))
 }
 
 #' @rdname VanillaCalendarProxy
