@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">VanillaCalendar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -223,10 +223,10 @@ box is clicked, and writes the chosen date into it.
 <img src="../reference/figures/input-mode.gif" alt="A popup date picker filling its text box"><div class="figcaption">A popup date picker filling its text box</div>
 </div>
 <p>Use <code>height = "auto"</code> for input mode, and
-<code>positionToInput</code> (<code>"auto"</code>,
-<code>"bottom"</code>, <code>"top"</code>, <code>"left"</code>,
-<code>"right"</code>, or a pair such as
-<code>c("bottom", "left")</code>) to say where the popup goes.</p>
+<code>positionToInput</code> to say where the popup goes:
+<code>"auto"</code>, one of <code>"left"</code>, <code>"center"</code>
+and <code>"right"</code>, or a vertical and horizontal pair such as
+<code>c("bottom", "left")</code>.</p>
 </div>
 <div class="section level2">
 <h2 id="changing-a-calendar-without-re-rendering-it">Changing a calendar without re-rendering it<a class="anchor" aria-label="anchor" href="#changing-a-calendar-without-re-rendering-it"></a>
@@ -253,12 +253,15 @@ methods</a>:</p>
 <span><span class="fu"><a href="../reference/VanillaCalendarProxy.html">vcShow</a></span><span class="op">(</span><span class="va">proxy</span><span class="op">)</span>                               <span class="co"># show a popup calendar</span></span>
 <span><span class="fu"><a href="../reference/VanillaCalendarProxy.html">vcHide</a></span><span class="op">(</span><span class="va">proxy</span><span class="op">)</span>                               <span class="co"># hide it again</span></span>
 <span><span class="fu"><a href="../reference/VanillaCalendarProxy.html">vcDestroy</a></span><span class="op">(</span><span class="va">proxy</span><span class="op">)</span>                            <span class="co"># remove it entirely</span></span></code></pre></div>
-<p><code>reset</code> says what should be thrown away when the change is
-applied — any of <code>year</code>, <code>month</code>,
-<code>dates</code>, <code>time</code>, <code>locale</code>:</p>
+<p>Only the parts you are actually setting are reset, so the theme
+change above leaves the selection and the displayed month exactly as the
+user left them. When you want to clear something you are <em>not</em>
+setting, say so with <code>reset</code> — any of <code>year</code>,
+<code>month</code>, <code>dates</code>, <code>time</code>,
+<code>locale</code>:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># clear the selection as well as changing the options</span></span>
-<span><span class="fu"><a href="../reference/VanillaCalendarProxy.html">vcSet</a></span><span class="op">(</span><span class="va">proxy</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>selectedDates <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>, reset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>dates <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># change the minimum date and drop the selection that no longer fits it</span></span>
+<span><span class="fu"><a href="../reference/VanillaCalendarProxy.html">vcSet</a></span><span class="op">(</span><span class="va">proxy</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>dateMin <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>, reset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>dates <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>Inside a Shiny module, build the proxy with the <em>unnamespaced</em>
 id; it uses the session to work out the full one:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">

@@ -27,7 +27,7 @@ vcDestroy() removes the calendar from the page."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">VanillaCalendar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -110,9 +110,12 @@ input mode.</p>
 
 
 <dt id="arg-reset">reset<a class="anchor" aria-label="anchor" href="#arg-reset"></a></dt>
-<dd><p>Optional named list of parts to reset when applying the change,
-with any of the logical entries <code>year</code>, <code>month</code>, <code>dates</code>, <code>time</code> and
-<code>locale</code>, e.g. <code>list(dates = TRUE)</code>.</p></dd>
+<dd><p>Optional named list overriding which parts of the calendar are
+reset to their option values, with any of the logical entries <code>year</code>,
+<code>month</code>, <code>dates</code>, <code>time</code> and <code>locale</code>. By default only the parts you are
+actually setting are reset, so <code>vcSet(proxy, list(selectedTheme = "dark"))</code>
+leaves the user's selection and the displayed month alone. Pass
+<code>list(dates = TRUE)</code> to clear a selection you are not replacing.</p></dd>
 
 </dl></div>
     <div class="section level2">

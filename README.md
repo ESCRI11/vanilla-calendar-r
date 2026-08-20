@@ -154,7 +154,8 @@ Shiny, with months as 1-12 rather than the JavaScript 0-11.
 
 `VanillaCalendarProxy()` reaches a calendar that is already on the page, so
 options can be changed in place — the calendar keeps its selection, position
-and focus instead of flickering back to its initial state.
+and focus instead of flickering back to its initial state. Only the parts you
+are actually setting change; pass `reset` to clear anything else.
 
 ![Switching between light and dark from the server](man/figures/themes.gif)
 

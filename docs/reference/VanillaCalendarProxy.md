@@ -53,9 +53,13 @@ vcDestroy(proxy)
 
 - reset:
 
-  Optional named list of parts to reset when applying the change, with
-  any of the logical entries `year`, `month`, `dates`, `time` and
-  `locale`, e.g. `list(dates = TRUE)`.
+  Optional named list overriding which parts of the calendar are reset
+  to their option values, with any of the logical entries `year`,
+  `month`, `dates`, `time` and `locale`. By default only the parts you
+  are actually setting are reset, so
+  `vcSet(proxy, list(selectedTheme = "dark"))` leaves the user's
+  selection and the displayed month alone. Pass `list(dates = TRUE)` to
+  clear a selection you are not replacing.
 
 ## Value
 

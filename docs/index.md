@@ -180,7 +180,8 @@ Choosing a month and a year from their pickers
 [`VanillaCalendarProxy()`](https://escri11.github.io/vanilla-calendar-r/reference/VanillaCalendarProxy.md)
 reaches a calendar that is already on the page, so options can be
 changed in place — the calendar keeps its selection, position and focus
-instead of flickering back to its initial state.
+instead of flickering back to its initial state. Only the parts you are
+actually setting change; pass `reset` to clear anything else.
 
 ![Switching between light and dark from the
 server](reference/figures/themes.gif)

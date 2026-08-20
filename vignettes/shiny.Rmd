@@ -128,9 +128,9 @@ usual.
 
 ![A popup date picker filling its text box](../man/figures/input-mode.gif)
 
-Use `height = "auto"` for input mode, and `positionToInput` (`"auto"`,
-`"bottom"`, `"top"`, `"left"`, `"right"`, or a pair such as
-`c("bottom", "left")`) to say where the popup goes.
+Use `height = "auto"` for input mode, and `positionToInput` to say where the
+popup goes: `"auto"`, one of `"left"`, `"center"` and `"right"`, or a vertical
+and horizontal pair such as `c("bottom", "left")`.
 
 ## Changing a calendar without re-rendering it
 
@@ -159,12 +159,14 @@ vcHide(proxy)                               # hide it again
 vcDestroy(proxy)                            # remove it entirely
 ```
 
-`reset` says what should be thrown away when the change is applied — any of
-`year`, `month`, `dates`, `time`, `locale`:
+Only the parts you are actually setting are reset, so the theme change above
+leaves the selection and the displayed month exactly as the user left them.
+When you want to clear something you are *not* setting, say so with `reset` —
+any of `year`, `month`, `dates`, `time`, `locale`:
 
 ```{r}
-# clear the selection as well as changing the options
-vcSet(proxy, list(selectedDates = list()), reset = list(dates = TRUE))
+# change the minimum date and drop the selection that no longer fits it
+vcSet(proxy, list(dateMin = Sys.Date()), reset = list(dates = TRUE))
 ```
 
 Inside a Shiny module, build the proxy with the *unnamespaced* id; it uses the

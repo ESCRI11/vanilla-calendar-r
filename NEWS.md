@@ -1,3 +1,27 @@
+# VanillaCalendar 2.0.1
+
+Fixes found by auditing the 2.0.0 release against the library it wraps.
+
+* Re-rendering a calendar left it detached from the page: the calendar
+  disappeared for the rest of the session and every later proxy call silently
+  did nothing. The library's `destroy()` replaces the widget element with a
+  clone of it, which the widget now puts back. `vcDestroy()` followed by a
+  re-render works too.
+* `vcSet()` and `vcUpdate()` reset the selection, displayed month, year, time
+  and locale on every call, because that is the library's default. They now
+  reset only the parts you are actually setting, which is what the
+  documentation always claimed: changing the theme no longer clears the user's
+  dates. Pass `reset` to clear something you are not setting.
+* `positionToInput = "auto"` (and `"left"`, `"center"`, `"right"`) was wrapped
+  in an array, which the library does not accept, leaving popups positioned at
+  `NaN`. Only the two-element form is an array.
+* `input$<id>_displayed` was only updated by the arrows, so it went stale and
+  reported the wrong month once the month or year picker was used.
+* `vcSet()` now warns when passed an `htmlwidgets::JS()` callback instead of
+  silently sending it as a dead string, which also disabled the matching Shiny
+  input.
+* `input$<id>_ready` fires again after a re-render.
+
 # VanillaCalendar 2.0.0
 
 Upgrade to Vanilla Calendar Pro 3.2.0, whose options are flat rather than

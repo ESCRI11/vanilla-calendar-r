@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">VanillaCalendar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -37,6 +37,21 @@
       <small>Source: <a href="https://github.com/ESCRI11/vanilla-calendar-r/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="2.0.1" id="vanillacalendar-201">VanillaCalendar 2.0.1<a class="anchor" aria-label="anchor" href="#vanillacalendar-201"></a></h2>
+<p>Fixes found by auditing the 2.0.0 release against the library it wraps.</p>
+<ul><li>Re-rendering a calendar left it detached from the page: the calendar disappeared for the rest of the session and every later proxy call silently did nothing. The library’s <code>destroy()</code> replaces the widget element with a clone of it, which the widget now puts back. <code><a href="../reference/VanillaCalendarProxy.html">vcDestroy()</a></code> followed by a re-render works too.</li>
+<li>
+<code><a href="../reference/VanillaCalendarProxy.html">vcSet()</a></code> and <code><a href="../reference/VanillaCalendarProxy.html">vcUpdate()</a></code> reset the selection, displayed month, year, time and locale on every call, because that is the library’s default. They now reset only the parts you are actually setting, which is what the documentation always claimed: changing the theme no longer clears the user’s dates. Pass <code>reset</code> to clear something you are not setting.</li>
+<li>
+<code>positionToInput = "auto"</code> (and <code>"left"</code>, <code>"center"</code>, <code>"right"</code>) was wrapped in an array, which the library does not accept, leaving popups positioned at <code>NaN</code>. Only the two-element form is an array.</li>
+<li>
+<code>input$&lt;id&gt;_displayed</code> was only updated by the arrows, so it went stale and reported the wrong month once the month or year picker was used.</li>
+<li>
+<code><a href="../reference/VanillaCalendarProxy.html">vcSet()</a></code> now warns when passed an <code><a href="https://rdrr.io/pkg/htmlwidgets/man/JS.html" class="external-link">htmlwidgets::JS()</a></code> callback instead of silently sending it as a dead string, which also disabled the matching Shiny input.</li>
+<li>
+<code>input$&lt;id&gt;_ready</code> fires again after a re-render.</li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="2.0.0" id="vanillacalendar-200">VanillaCalendar 2.0.0<a class="anchor" aria-label="anchor" href="#vanillacalendar-200"></a></h2>
 <p>Upgrade to Vanilla Calendar Pro 3.2.0, whose options are flat rather than nested. This is a breaking change.</p>

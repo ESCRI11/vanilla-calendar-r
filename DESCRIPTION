@@ -1,6 +1,6 @@
 Package: VanillaCalendar
 Title: Interactive Calendar Widget for R and Shiny
-Version: 2.0.0
+Version: 2.0.1
 Authors@R: c(
     person(given = "Xavier", family = "Escribà Montagut", email = "xavier.escriba.montagut@gmail.com", role = c("aut", "cre")),
     person(given = "Yury", family = "Uvarov", role = c("ctb", "cph"),
