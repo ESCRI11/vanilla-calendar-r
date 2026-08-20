@@ -19,9 +19,11 @@ test_that("width, height and elementId are forwarded", {
 })
 
 test_that("the widget declares the bundled dependency", {
-  w <- VanillaCalendar()
-  html <- as.character(htmltools::as.tags(w))
-  expect_match(html, "VanillaCalendar")
+  deps <- htmlwidgets::getDependency("VanillaCalendar", "VanillaCalendar")
+  bundled <- Filter(function(d) d$name == "VanillaCalendar", deps)[[1]]
+  expect_identical(bundled$version, "3.2.0")
+  expect_identical(bundled$script, "vanilla-calendar.min.js")
+  expect_identical(bundled$stylesheet, "vanilla-calendar.min.css")
 })
 
 test_that("the calendar renders to HTML without a Shiny session", {

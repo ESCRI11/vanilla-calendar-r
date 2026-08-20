@@ -41,17 +41,17 @@ test_that("vcSet warns on unknown options, like the constructor", {
   expect_warning(vcSet(proxy, list(nope = 1)), "Unknown Vanilla Calendar option")
 })
 
-test_that("reset is passed through and NULL arguments are dropped", {
+test_that("reset is passed through, and verbs that take nothing send nothing", {
   session <- fake_session()
   proxy <- VanillaCalendarProxy("cal", session = session)
 
   vcSet(proxy, list(locale = "fr"), reset = list(dates = TRUE))
-  vcUpdate(proxy)
+  vcShow(proxy)
 
   msgs <- session$messages()
-  expect_length(msgs[[1]]$message$args, 2)
+  expect_length(msgs[[1]]$message$args, 2)      # options, then the reset spec
   expect_true(msgs[[1]]$message$args[[2]]$dates)
-  expect_identical(msgs[[2]]$message$method, "update")
+  expect_true(msgs[[1]]$message$args[[2]]$locale)  # locale is being set
   expect_length(msgs[[2]]$message$args, 0)
 })
 
@@ -83,4 +83,54 @@ test_that("the proxy explains itself when shiny is missing", {
   local_mocked_bindings(requireNamespace = function(...) FALSE, .package = "base")
   expect_error(VanillaCalendarProxy("cal", session = fake_session()),
                "requires the 'shiny' package")
+})
+
+test_that("only the parts being set are reset", {
+  session <- fake_session()
+  proxy <- VanillaCalendarProxy("cal", session = session)
+
+  vcSet(proxy, list(selectedTheme = "dark"))
+  reset <- session$messages()[[1]]$message$args[[2]]
+  expect_false(any(unlist(reset)))   # a theme change must not clear the selection
+  expect_setequal(names(reset), c("year", "month", "dates", "time", "locale"))
+
+  vcSet(proxy, list(selectedDates = as.Date("2026-01-01")))
+  reset <- session$messages()[[2]]$message$args[[2]]
+  expect_true(reset$dates)           # ... but new dates have to be applied
+  expect_false(reset$month)
+})
+
+test_that("an explicit reset wins over the derived one", {
+  session <- fake_session()
+  proxy <- VanillaCalendarProxy("cal", session = session)
+
+  vcSet(proxy, list(selectedTheme = "dark"), reset = list(dates = TRUE))
+  reset <- session$messages()[[1]]$message$args[[2]]
+  expect_true(reset$dates)
+  expect_false(reset$month)
+})
+
+test_that("vcUpdate() keeps the live state unless told otherwise", {
+  session <- fake_session()
+  proxy <- VanillaCalendarProxy("cal", session = session)
+
+  vcUpdate(proxy)
+  expect_false(any(unlist(session$messages()[[1]]$message$args[[1]])))
+
+  vcUpdate(proxy, reset = list(time = TRUE))
+  expect_true(session$messages()[[2]]$message$args[[1]]$time)
+})
+
+test_that("callbacks are refused rather than sent as dead strings", {
+  session <- fake_session()
+  proxy <- VanillaCalendarProxy("cal", session = session)
+
+  expect_warning(
+    vcSet(proxy, list(selectedTheme = "dark",
+                      onClickDate = htmlwidgets::JS("function(c) {}"))),
+    "cannot be sent through a proxy"
+  )
+  sent <- session$messages()[[1]]$message$args[[1]]
+  expect_null(sent$onClickDate)
+  expect_identical(sent$selectedTheme, "dark")
 })

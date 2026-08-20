@@ -61,8 +61,10 @@ test_that("known option names do not warn", {
   expect_no_warning(.vc_fix(list(type = "default", locale = "en")))
 })
 
-test_that("the option name list matches the bundled library version", {
-  # A guard against forgetting to regenerate .vc_option_names on a JS upgrade.
+test_that("the option name list is v3-shaped", {
+  # Not a guard against an upstream addition, which needs the .d.ts files:
+  # this only catches the list being left behind at v2 or falling out of sync
+  # with .vc_array_options.
   expect_true(all(c("inputMode", "selectionDatesMode", "selectedTheme",
                     "onChangeTime", "themeAttrDetect") %in% .vc_option_names))
   expect_false("settings" %in% .vc_option_names)  # the v2 nesting is gone
@@ -77,4 +79,16 @@ test_that("empty and NULL options are accepted", {
 test_that("malformed options error", {
   expect_error(.vc_fix("single"), "must be a list")
   expect_error(.vc_fix(list("single")), "named list")
+})
+
+test_that("positionToInput keeps the shape the library expects", {
+  # "auto" and the X positions are scalars upstream; only the pair is an array
+  scalar <- .vc_fix(list(positionToInput = "auto"))
+  expect_identical(scalar$positionToInput, "auto")
+  expect_match(as.character(htmlwidgets:::toJSON2(scalar)),
+               '"positionToInput":"auto"')
+
+  pair <- .vc_fix(list(positionToInput = c("bottom", "left")))
+  expect_match(as.character(htmlwidgets:::toJSON2(pair)),
+               '"positionToInput":\\["bottom","left"\\]')
 })

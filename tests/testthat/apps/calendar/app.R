@@ -6,6 +6,8 @@ ui <- fluidPage(
   VanillaCalendarOutput("cal", height = "500px"),
   VanillaCalendarOutput("picker", height = "auto"),
   actionButton("dark", "Dark"),
+  actionButton("rerender", "Re-render"),
+  actionButton("destroy", "Destroy"),
   actionButton("clear", "Clear"),
   actionButton("hide", "Hide picker"),
   verbatimTextOutput("out_class"),
@@ -20,7 +22,8 @@ ui <- fluidPage(
 )
 
 server <- function(input, output, session) {
-  output$cal <- renderVanillaCalendar(
+  output$cal <- renderVanillaCalendar({
+    input$rerender  # a reactive dependency, so the block can be re-run
     VanillaCalendar(list(
       locale = "en",
       selectionDatesMode = "multiple",
@@ -32,7 +35,7 @@ server <- function(input, output, session) {
         "function(self) { Shiny.setInputValue('custom_fired', true); }"
       )
     ))
-  )
+  })
 
   output$picker <- renderVanillaCalendar(
     VanillaCalendar(list(inputMode = TRUE, selectionDatesMode = "single"),
@@ -48,6 +51,9 @@ server <- function(input, output, session) {
   })
   observeEvent(input$hide, {
     vcHide(VanillaCalendarProxy("picker"))
+  })
+  observeEvent(input$destroy, {
+    vcDestroy(VanillaCalendarProxy("cal"))
   })
 
   output$out_class <- renderText(paste(class(input$cal_selected), collapse = "/"))

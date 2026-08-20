@@ -105,6 +105,58 @@ test_that("the proxy changes a live calendar without re-rendering it", {
   expect_identical(app$get_js("document.getElementById('cal').dataset.marker"), "kept")
 })
 
+test_that("a proxy call keeps the selection and the displayed month", {
+  click_dates(app, c(8, 10))
+  before <- app$get_value(output = "out_dates")
+  app$run_js("document.querySelector('#cal [data-vc-arrow=\"next\"]').click()")
+  app$wait_for_idle()
+  month_before <- app$get_js("document.querySelector('#cal [data-vc=\"month\"]').innerText")
+
+  app$click("dark")   # vcSet(list(selectedTheme = ...)): touches nothing else
+  app$wait_for_idle()
+
+  expect_identical(app$get_value(output = "out_dates"), before)
+  # the dates live in the month we scrolled away from, so ask the calendar itself
+  expect_equal(
+    app$get_js("HTMLWidgets.getInstance(document.getElementById('cal')).calendar.context.selectedDates.length"),
+    2
+  )
+  expect_identical(
+    app$get_js("document.querySelector('#cal [data-vc=\"month\"]').innerText"),
+    month_before
+  )
+})
+
+test_that("re-rendering leaves a working, addressable calendar", {
+  app$click("rerender")
+  app$wait_for_idle()
+
+  expect_gt(app$get_js("document.querySelectorAll('#cal [data-vc-date-btn]').length"), 27)
+  expect_true(app$get_js(
+    "document.getElementById('cal') === document.querySelector('#cal[data-vc=calendar]')"))
+  expect_true(app$get_js(
+    "!!HTMLWidgets.getInstance(document.getElementById('cal'))"))
+
+  # the calendar must still answer the server after being rebuilt
+  app$click("dark")
+  app$wait_for_idle()
+  expect_identical(app$get_js("document.getElementById('cal').dataset.vcTheme"), "dark")
+
+  # ... and still report clicks
+  click_dates(app, c(9))
+  expect_false(app$get_value(output = "out_dates") == "")
+})
+
+test_that("a destroyed calendar can be rendered again", {
+  app$click("destroy")
+  app$wait_for_idle()
+  expect_equal(app$get_js("document.querySelectorAll('#cal [data-vc-date-btn]').length"), 0)
+
+  app$click("rerender")
+  app$wait_for_idle()
+  expect_gt(app$get_js("document.querySelectorAll('#cal [data-vc-date-btn]').length"), 27)
+})
+
 test_that("the proxy can reset the selection", {
   click_dates(app, c(12))
   expect_false(app$get_value(output = "out_dates") == "")
