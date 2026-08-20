@@ -2,5 +2,11 @@
 
 export(VanillaCalendar)
 export(VanillaCalendarOutput)
+export(VanillaCalendarProxy)
 export(renderVanillaCalendar)
+export(vcDestroy)
+export(vcHide)
+export(vcSet)
+export(vcShow)
+export(vcUpdate)
 import(htmlwidgets)
