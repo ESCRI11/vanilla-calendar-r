@@ -6,7 +6,7 @@
 \alias{renderVanillaCalendar}
 \title{Shiny bindings for VanillaCalendar}
 \usage{
-VanillaCalendarOutput(outputId, width = "1000px", height = "400px")
+VanillaCalendarOutput(outputId, width = "100\%", height = "400px")
 
 renderVanillaCalendar(expr, env = parent.frame(), quoted = FALSE)
 }
@@ -15,7 +15,8 @@ renderVanillaCalendar(expr, env = parent.frame(), quoted = FALSE)
 
 \item{width, height}{Must be a valid CSS unit (like \code{'100\%'},
 \code{'400px'}, \code{'auto'}) or a number, which will be coerced to a
-string and have \code{'px'} appended.}
+string and have \code{'px'} appended. Use \code{height = 'auto'} with
+\code{inputMode = TRUE}.}
 
 \item{expr}{An expression that generates a VanillaCalendar}
 
@@ -23,6 +24,10 @@ string and have \code{'px'} appended.}
 
 \item{quoted}{Is \code{expr} a quoted expression (with \code{quote()})? This
 is useful if you want to save an expression in a variable.}
+}
+\value{
+\code{VanillaCalendarOutput()} returns a Shiny output element;
+\code{renderVanillaCalendar()} returns a Shiny render function.
 }
 \description{
 Output and render functions for using VanillaCalendar within Shiny
@@ -33,24 +38,25 @@ applications and interactive Rmd documents.
 if (interactive()) {
   library(shiny)
   library(VanillaCalendar)
-  
+
   ui <- fluidPage(
-    VanillaCalendarOutput("calendar")
+    VanillaCalendarOutput("calendar"),
+    verbatimTextOutput("dates")
   )
-  
+
   server <- function(input, output) {
     output$calendar <- renderVanillaCalendar({
       VanillaCalendar(
         options = list(
           type = "default",
-          settings = list(
-            lang = "en"
-          )
+          locale = "en",
+          selectionDatesMode = "multiple"
         )
       )
     })
+    output$dates <- renderPrint(input$calendar_selected)
   }
-  
+
   shinyApp(ui, server)
 }
 

@@ -4,45 +4,100 @@
 \alias{VanillaCalendar}
 \title{Vanilla Calendar Widget}
 \usage{
-VanillaCalendar(options, width = NULL, height = NULL, elementId = NULL)
+VanillaCalendar(
+  options = list(),
+  width = NULL,
+  height = NULL,
+  elementId = NULL
+)
 }
 \arguments{
-\item{options}{A list of options to configure the calendar widget}
+\item{options}{A named list of Vanilla Calendar Pro options, passed to the
+JavaScript library. Every option documented in the
+\href{https://vanilla-calendar.pro/docs/reference/additionally/settings}{upstream reference}
+is accepted; names are validated against the bundled library version and
+unknown names raise a warning. \code{Date} and \code{POSIXct} values are converted to
+the \code{"YYYY-MM-DD"} strings the library expects, and options that must be
+arrays (such as \code{selectedDates}) are boxed for you, so a single date works.
+JavaScript callbacks can be supplied with \code{\link[htmlwidgets:JS]{htmlwidgets::JS()}}; they run in
+addition to, not instead of, the Shiny inputs described below. Note that
+options keep the library's own conventions, so \code{selectedMonth} counts
+months from 0 (\code{11} is December) even though \verb{input$<id>_selected_month}
+is reported to R as 1-12.}
 
-\item{width}{The width of the widget. Must be a valid CSS unit (like '100\%', '400px', 'auto') or a number, which will be coerced to a string and have 'px' appended.}
+\item{width, height}{Must be a valid CSS unit (like \code{'100\\\%'}, \code{'400px'},
+\code{'auto'}) or a number, which will be coerced to a string and have \code{'px'}
+appended.}
 
-\item{height}{The height of the widget. Must be a valid CSS unit (like '100\%', '400px', 'auto') or a number, which will be coerced to a string and have 'px' appended.}
-
-\item{elementId}{An optional ID for the widget element}
+\item{elementId}{An optional ID for the widget element.}
+}
+\value{
+An object of class \code{htmlwidget}.
 }
 \description{
-Creates a Vanilla Calendar widget for use in R and Shiny applications.
+Creates a \href{https://vanilla-calendar.pro/}{Vanilla Calendar Pro} calendar or
+date picker for use in R, R Markdown and Shiny applications.
 }
+\section{Shiny inputs}{
+
+When rendered in Shiny, the widget reports its state back to the server.
+For an output with id \code{"cal"}:
+
+\describe{
+\item{\code{input$cal_selected}}{A \code{Date} vector of the selected dates
+(length 0 when nothing is selected).}
+\item{\code{input$cal_selected_month}}{Selected month, 1-12.}
+\item{\code{input$cal_selected_year}}{Selected year.}
+\item{\code{input$cal_displayed}}{First day of the displayed month, as a
+\code{Date}, updated when the user clicks the arrows.}
+\item{\code{input$cal_time}}{Selected time as a string, e.g. \code{"14:30"}, when
+\code{selectionTimeMode} is enabled.}
+\item{\code{input$cal_week}}{A list with \code{week} and \code{year}, when
+\code{enableWeekNumbers} is enabled and a week number is clicked.}
+\item{\code{input$cal_ready}}{\code{TRUE} once the calendar has initialised.}
+}
+}
+
+\section{Input mode}{
+
+With \code{options = list(inputMode = TRUE)} the widget renders a text input and
+shows the calendar as a popup, the behaviour documented under
+\href{https://vanilla-calendar.pro/docs/reference/additionally/settings}{input mode}
+upstream. Pair it with \code{height = "auto"}.
+}
+
+\section{Theming}{
+
+\code{selectedTheme} accepts \code{"light"}, \code{"dark"} or \code{"system"}. In system mode the
+library reads the theme from the attribute named by \code{themeAttrDetect}, which
+defaults to \code{"html[data-theme]"}. Shiny apps using \pkg{bslib} should set
+\code{themeAttrDetect = "html[data-bs-theme]"} to follow the app theme.
+}
+
 \examples{
 # Basic calendar with default settings
-if (interactive()) {
-  VanillaCalendar(options = list())
-}
+VanillaCalendar()
 
-# Calendar with custom settings
-if (interactive()) {
-  VanillaCalendar(
-    options = list(
-      type = "default",
-      visibility = "visible",
-      settings = list(
-        lang = "en",
-        selection = list(
-          day = "single"
-        ),
-        visibility = list(
-          theme = "light"
-        )
-      )
-    ),
-    width = "500px",
-    height = "400px"
-  )
-}
+# Calendar with custom options
+VanillaCalendar(
+  options = list(
+    type = "default",
+    locale = "en",
+    selectionDatesMode = "multiple",
+    selectedDates = Sys.Date(),
+    selectedTheme = "light"
+  ),
+  width = "500px",
+  height = "400px"
+)
 
+# Date picker attached to a text input
+VanillaCalendar(
+  options = list(inputMode = TRUE, selectionDatesMode = "single"),
+  height = "auto"
+)
+
+}
+\seealso{
+\code{\link[=VanillaCalendarProxy]{VanillaCalendarProxy()}} to update a calendar in place from Shiny.
 }
