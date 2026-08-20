@@ -23,4 +23,10 @@ Config/roxygen2/version: 8.1.0
 Imports:
     htmlwidgets
 Suggests:
-    shiny
+    shiny,
+    testthat (>= 3.0.0),
+    shinytest2,
+    chromote,
+    htmltools,
+    withr
+Config/testthat/edition: 3
