@@ -1,0 +1,37 @@
+url: https://escri11.github.io/vanilla-calendar-r/
+
+template:
+  bootstrap: 5
+  bslib:
+    primary: "#0ea5e9"
+
+navbar:
+  structure:
+    left: [intro, reference, articles, news]
+    right: [search, github]
+
+home:
+  title: Interactive calendars and date pickers for R and Shiny
+  description: >
+    An htmlwidget wrapping Vanilla Calendar Pro, with date, month, year and
+    time selection, a popup date picker, theming, and in-place updates from
+    the Shiny server.
+
+articles:
+- title: Articles
+  navbar: ~
+  contents:
+  - VanillaCalendar
+  - shiny
+
+reference:
+- title: The widget
+  desc: Create a calendar, and place it in a Shiny app.
+  contents:
+  - VanillaCalendar
+  - VanillaCalendar-shiny
+- title: Updating a calendar from Shiny
+  desc: >
+    Change a calendar that is already on the page, without re-rendering it.
+  contents:
+  - VanillaCalendarProxy

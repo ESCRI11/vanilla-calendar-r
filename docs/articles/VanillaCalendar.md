@@ -1,0 +1,196 @@
+# Getting started with VanillaCalendar
+
+``` r
+library(VanillaCalendar)
+```
+
+This package puts [Vanilla Calendar Pro](https://vanilla-calendar.pro/)
+— a small, dependency-free JavaScript calendar — into R. Every calendar
+on this page is live: click around in them.
+
+## One function, one list
+
+[`VanillaCalendar()`](https://escri11.github.io/vanilla-calendar-r/reference/VanillaCalendar.md)
+takes a list of options and returns a widget.
+
+``` r
+VanillaCalendar()
+```
+
+The options are the ones in the [Vanilla Calendar Pro
+reference](https://vanilla-calendar.pro/docs/reference/additionally/settings),
+written exactly as they are documented there. Nothing is renamed, so
+when you read the upstream docs you can use what you find directly.
+
+``` r
+VanillaCalendar(
+  options = list(
+    locale = "en",
+    firstWeekday = 1,
+    selectedTheme = "light"
+  ),
+  height = "380px"
+)
+```
+
+## Choosing dates
+
+`selectionDatesMode` decides how many dates the user can pick.
+
+| Value               | Behaviour                                               |
+|---------------------|---------------------------------------------------------|
+| `"single"`          | One date at a time (the default)                        |
+| `"multiple"`        | Any number of separate dates                            |
+| `"multiple-ranged"` | A start and an end, with everything between highlighted |
+| `FALSE`             | Nothing selectable, a read-only calendar                |
+
+``` r
+VanillaCalendar(
+  options = list(selectionDatesMode = "multiple-ranged", locale = "en"),
+  height = "380px"
+)
+```
+
+Pre-select dates with `selectedDates`. R `Date` objects are converted
+for you, and a single date does not need wrapping in a list.
+
+``` r
+VanillaCalendar(
+  options = list(
+    locale = "en",
+    selectionDatesMode = "multiple",
+    selectedDates = Sys.Date() + c(0, 2, 4)
+  ),
+  height = "380px"
+)
+```
+
+## Restricting what can be picked
+
+``` r
+VanillaCalendar(
+  options = list(
+    locale = "en",
+    dateMin = Sys.Date(),                     # nothing in the past
+    dateMax = Sys.Date() + 30,                # nothing beyond a month out
+    disableWeekdays = c(0, 6),                # no weekends; Sunday is 0
+    disableDates = Sys.Date() + 3,            # and not that one either
+    displayDisabledDates = TRUE
+  ),
+  height = "380px"
+)
+```
+
+`disableDatesPast = TRUE` is a shortcut for “nothing before today”, and
+`enableDates` works the other way round, allowing only what you list.
+
+## Several months at once
+
+``` r
+VanillaCalendar(
+  options = list(
+    locale = "en",
+    type = "multiple",
+    displayMonthsCount = 2,
+    displayDatesOutside = FALSE,
+    selectionDatesMode = "multiple-ranged"
+  ),
+  width = "100%",
+  height = "400px"
+)
+```
+
+`type` also takes `"month"` and `"year"` for calendars that only pick a
+month or a year.
+
+## Time
+
+``` r
+VanillaCalendar(
+  options = list(
+    locale = "en",
+    selectionTimeMode = 24,     # or 12, for an AM/PM picker
+    selectedTime = "09:00",
+    timeMinHour = 8,
+    timeMaxHour = 18,
+    timeStepMinute = 15
+  ),
+  height = "440px"
+)
+```
+
+## Weeks, weekends and holidays
+
+``` r
+VanillaCalendar(
+  options = list(
+    locale = "en",
+    enableWeekNumbers = TRUE,
+    selectedWeekends = c(0, 6),
+    selectedHolidays = as.Date(c("2026-12-25", "2026-12-26", "2027-01-01"))
+  ),
+  height = "400px"
+)
+```
+
+## Language
+
+`locale` takes any BCP 47 tag the browser knows, so the month and
+weekday names come from the browser rather than from a translation table
+shipped here.
+
+``` r
+VanillaCalendar(options = list(locale = "ca-ES"), height = "380px")
+```
+
+For full control, pass month and weekday names yourself:
+
+``` r
+VanillaCalendar(
+  options = list(
+    locale = list(
+      months = list(long = month.name, short = month.abb),
+      weekdays = list(long = c("Sunday", "Monday", "Tuesday", "Wednesday",
+                               "Thursday", "Friday", "Saturday"),
+                      short = c("Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"))
+    )
+  ),
+  height = "380px"
+)
+```
+
+## Dark mode
+
+``` r
+VanillaCalendar(
+  options = list(locale = "en", selectedTheme = "dark"),
+  height = "380px"
+)
+```
+
+`"system"` follows the page instead, reading the attribute named by
+`themeAttrDetect` (`"html[data-theme]"` by default). In a **bslib** app,
+set `themeAttrDetect = "html[data-bs-theme]"`.
+
+## Two things to watch out for
+
+Option names are checked against the bundled library, so a typo tells
+you rather than quietly doing nothing:
+
+``` r
+cal <- VanillaCalendar(options = list(selectionDateMode = "single"))
+#> Warning: Unknown Vanilla Calendar option(s) ignored by the calendar:
+#> selectionDateMode
+```
+
+And `selectedMonth` is a library option, so it counts months from 0 like
+JavaScript does — `selectedMonth = 11` is December. The Shiny *input*
+`input$cal_selected_month` is converted to the R convention of 1-12.
+
+## Where next
+
+- [`vignette("shiny")`](https://escri11.github.io/vanilla-calendar-r/articles/shiny.md)
+  for reading selections into R and updating calendars from the server.
+- The [upstream documentation](https://vanilla-calendar.pro/docs) for
+  the full option reference, including the styling and layout hooks this
+  package passes through untouched.

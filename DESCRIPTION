@@ -28,5 +28,8 @@ Suggests:
     shinytest2,
     chromote,
     htmltools,
-    withr
+    withr,
+    knitr,
+    rmarkdown
 Config/testthat/edition: 3
+VignetteBuilder: knitr

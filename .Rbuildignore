@@ -3,3 +3,7 @@
 ^LICENSE\.md$
 ^tests/testthat/_snaps$
 ^\.github$
+^dev$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
