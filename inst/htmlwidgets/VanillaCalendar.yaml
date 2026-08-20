@@ -1,6 +1,6 @@
 dependencies:
  - name: VanillaCalendar
-   version: 2.9.3
-   src: /htmlwidgets/lib/VanillaCalendar-2.9.3
+   version: 3.2.0
+   src: /htmlwidgets/lib/VanillaCalendar-3.2.0
    script: vanilla-calendar.min.js
    stylesheet: vanilla-calendar.min.css
