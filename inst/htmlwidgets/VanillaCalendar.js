@@ -17,6 +17,13 @@ HTMLWidgets.widget({
       return String(n).length < 2 ? '0' + n : String(n);
     }
 
+    // the month on screen, which the arrows and both pickers can change
+    function sendDisplayed(cal) {
+      send('_displayed:VanillaCalendar.dates',
+           [cal.context.selectedYear + '-' +
+            pad(cal.context.selectedMonth + 1) + '-01'], true);
+    }
+
     var self = {
 
       calendar: null,
@@ -38,15 +45,13 @@ HTMLWidgets.widget({
           },
           onClickMonth: function(cal) {
             send('_selected_month', cal.context.selectedMonth + 1, true);
+            sendDisplayed(cal);
           },
           onClickYear: function(cal) {
             send('_selected_year', cal.context.selectedYear, true);
+            sendDisplayed(cal);
           },
-          onClickArrow: function(cal) {
-            send('_displayed:VanillaCalendar.dates',
-                 [cal.context.selectedYear + '-' +
-                  pad(cal.context.selectedMonth + 1) + '-01'], true);
-          },
+          onClickArrow: sendDisplayed,
           onChangeTime: function(cal, event, isError) {
             if (!isError) send('_time', cal.context.selectedTime, true);
           },
@@ -54,7 +59,7 @@ HTMLWidgets.widget({
             send('_week', { week: number, year: year }, true);
           },
           onInit: function(cal) {
-            send('_ready', true);
+            send('_ready', true, true);
           }
         };
 
@@ -68,7 +73,15 @@ HTMLWidgets.widget({
           } : def;
         });
 
-        if (self.calendar) self.calendar.destroy();
+        if (self.calendar) {
+          // already destroyed via vcDestroy(): the library throws on a second call
+          try { self.calendar.destroy(); } catch (e) { /* nothing left to tear down */ }
+          // destroy() replaces our element with a clone taken at init(), which would
+          // leave us building the new calendar into a detached node
+          var live = document.getElementById(el.id);
+          if (live && live !== el && live.parentNode) live.parentNode.replaceChild(el, live);
+          el.innerHTML = '';
+        }
 
         // input mode needs a real <input>; htmlwidgets only gives us a <div>
         var target = el;
