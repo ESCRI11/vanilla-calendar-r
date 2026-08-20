@@ -28,7 +28,9 @@ VanillaCalendar(
   you, so a single date works. JavaScript callbacks can be supplied with
   [`htmlwidgets::JS()`](https://rdrr.io/pkg/htmlwidgets/man/JS.html);
   they run in addition to, not instead of, the Shiny inputs described
-  below.
+  below. Note that options keep the library's own conventions, so
+  `selectedMonth` counts months from 0 (`11` is December) even though
+  `input$<id>_selected_month` is reported to R as 1-12.
 
 - width, height:
 

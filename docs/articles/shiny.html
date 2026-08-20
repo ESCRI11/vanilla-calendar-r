@@ -67,33 +67,66 @@
     
     
 <p>The code here is not run when the vignette is built, because it needs
-a running Shiny app. Everything in it comes from the demo app that ships
-with the package, which you can run yourself:</p>
+a running Shiny app. Both apps it draws on ship with the package, so you
+can run them before writing anything yourself:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">shiny</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/runApp.html" class="external-link">runApp</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"examples/gallery"</span>, package <span class="op">=</span> <span class="st">"VanillaCalendar"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># the smallest useful app, reproduced in full below</span></span>
+<span><span class="fu">shiny</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/runApp.html" class="external-link">runApp</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"examples/minimal"</span>, package <span class="op">=</span> <span class="st">"VanillaCalendar"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># a tour of everything else on this page</span></span>
+<span><span class="fu">shiny</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/runApp.html" class="external-link">runApp</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"examples/gallery"</span>, package <span class="op">=</span> <span class="st">"VanillaCalendar"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="section level2">
-<h2 id="the-pair-of-functions">The pair of functions<a class="anchor" aria-label="anchor" href="#the-pair-of-functions"></a>
+<h2 id="the-smallest-app-that-works">The smallest app that works<a class="anchor" aria-label="anchor" href="#the-smallest-app-that-works"></a>
 </h2>
-<p>A calendar goes in the UI with <code><a href="../reference/VanillaCalendar-shiny.html">VanillaCalendarOutput()</a></code>
-and is filled in the server with <code><a href="../reference/VanillaCalendar-shiny.html">renderVanillaCalendar()</a></code>,
-like any other htmlwidget.</p>
+<p>There are three steps, and they are the same three as for any
+htmlwidget:</p>
+<ol style="list-style-type: decimal">
+<li>
+<code>VanillaCalendarOutput("cal")</code> in the UI, to say where
+the calendar goes.</li>
+<li>
+<code><a href="../reference/VanillaCalendar-shiny.html">renderVanillaCalendar()</a></code> in the server, to build
+it.</li>
+<li>Read what the user picked from <code>input$cal_selected</code>.</li>
+</ol>
+<p>That is the whole app:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://shiny.posit.co/" class="external-link">shiny</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ESCRI11/vanilla-calendar-r" class="external-link">VanillaCalendar</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html" class="external-link">fluidPage</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/titlePanel.html" class="external-link">titlePanel</a></span><span class="op">(</span><span class="st">"Pick a date"</span><span class="op">)</span>,</span>
 <span>  <span class="fu"><a href="../reference/VanillaCalendar-shiny.html">VanillaCalendarOutput</a></span><span class="op">(</span><span class="st">"cal"</span>, height <span class="op">=</span> <span class="st">"400px"</span><span class="op">)</span>,</span>
-<span>  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/textOutput.html" class="external-link">verbatimTextOutput</a></span><span class="op">(</span><span class="st">"picked"</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/textOutput.html" class="external-link">textOutput</a></span><span class="op">(</span><span class="st">"chosen"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">server</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">output</span><span class="op">$</span><span class="va">cal</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/VanillaCalendar-shiny.html">renderVanillaCalendar</a></span><span class="op">(</span></span>
-<span>    <span class="fu"><a href="../reference/VanillaCalendar.html">VanillaCalendar</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>locale <span class="op">=</span> <span class="st">"en"</span>, selectionDatesMode <span class="op">=</span> <span class="st">"multiple"</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="op">)</span></span>
-<span>  <span class="va">output</span><span class="op">$</span><span class="va">picked</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/renderPrint.html" class="external-link">renderPrint</a></span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">cal_selected</span><span class="op">)</span></span>
+<span>  <span class="va">output</span><span class="op">$</span><span class="va">cal</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/VanillaCalendar-shiny.html">renderVanillaCalendar</a></span><span class="op">(</span><span class="fu"><a href="../reference/VanillaCalendar.html">VanillaCalendar</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="va">output</span><span class="op">$</span><span class="va">chosen</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/renderPrint.html" class="external-link">renderText</a></span><span class="op">(</span><span class="op">{</span></span>
+<span>    <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">cal_selected</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span> <span class="st">"Nothing picked yet."</span></span>
+<span>    <span class="kw">else</span> <span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">cal_selected</span>, <span class="st">"%A, %d %B %Y"</span><span class="op">)</span></span>
+<span>  <span class="op">}</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html" class="external-link">shinyApp</a></span><span class="op">(</span><span class="va">ui</span>, <span class="va">server</span><span class="op">)</span></span></code></pre></div>
+<p>Nothing above is specific to this widget except the two function
+names. What the calendar <em>does</em> is decided by the options you
+pass, and the structure stays as it is:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># let the user drag out a range</span></span>
+<span><span class="va">output</span><span class="op">$</span><span class="va">cal</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/VanillaCalendar-shiny.html">renderVanillaCalendar</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="../reference/VanillaCalendar.html">VanillaCalendar</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>selectionDatesMode <span class="op">=</span> <span class="st">"multiple-ranged"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># or make it a text box with a popup, for a form</span></span>
+<span><span class="va">output</span><span class="op">$</span><span class="va">cal</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/VanillaCalendar-shiny.html">renderVanillaCalendar</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="../reference/VanillaCalendar.html">VanillaCalendar</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>inputMode <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, height <span class="op">=</span> <span class="st">"auto"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># or add a time picker under the dates</span></span>
+<span><span class="va">output</span><span class="op">$</span><span class="va">cal</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/VanillaCalendar-shiny.html">renderVanillaCalendar</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="../reference/VanillaCalendar.html">VanillaCalendar</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>selectionTimeMode <span class="op">=</span> <span class="fl">24</span><span class="op">)</span>, height <span class="op">=</span> <span class="st">"440px"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="reading-what-the-user-did">Reading what the user did<a class="anchor" aria-label="anchor" href="#reading-what-the-user-did"></a>
@@ -157,7 +190,7 @@ id. For an output called <code>"cal"</code>:</p>
 and is <code>Date(0)</code> — not <code>NULL</code>, not
 <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code> — when the user has selected nothing. That means the
 obvious code works without guards:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">output</span><span class="op">$</span><span class="va">summary</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/renderPrint.html" class="external-link">renderText</a></span><span class="op">(</span><span class="op">{</span></span>
 <span>  <span class="va">dates</span> <span class="op">&lt;-</span> <span class="va">input</span><span class="op">$</span><span class="va">cal_selected</span></span>
 <span>  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">dates</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span> <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="st">"Nothing selected."</span><span class="op">)</span></span>
@@ -176,7 +209,7 @@ both times rather than being swallowed as an unchanged value.</p>
 </h2>
 <p>Forms usually want a date field, not a permanent block of calendar.
 That is <code>inputMode</code>:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/VanillaCalendar-shiny.html">VanillaCalendarOutput</a></span><span class="op">(</span><span class="st">"when"</span>, height <span class="op">=</span> <span class="st">"auto"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">output</span><span class="op">$</span><span class="va">when</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/VanillaCalendar-shiny.html">renderVanillaCalendar</a></span><span class="op">(</span></span>
@@ -202,7 +235,7 @@ box is clicked, and writes the chosen date into it.
 calendar: the selection is lost, the displayed month jumps back, and the
 widget visibly flickers. To change something about a calendar that is
 already on the page, use a proxy.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/observeEvent.html" class="external-link">observeEvent</a></span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">theme</span>, <span class="op">{</span></span>
 <span>  <span class="fu"><a href="../reference/VanillaCalendarProxy.html">vcSet</a></span><span class="op">(</span><span class="fu"><a href="../reference/VanillaCalendarProxy.html">VanillaCalendarProxy</a></span><span class="op">(</span><span class="st">"cal"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>selectedTheme <span class="op">=</span> <span class="va">input</span><span class="op">$</span><span class="va">theme</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span><span class="op">)</span></span></code></pre></div>
@@ -212,7 +245,7 @@ place</div>
 </div>
 <p>The verbs map onto the library’s <a href="https://vanilla-calendar.pro/docs/reference/additionally/methods" class="external-link">instance
 methods</a>:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">proxy</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/VanillaCalendarProxy.html">VanillaCalendarProxy</a></span><span class="op">(</span><span class="st">"cal"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/VanillaCalendarProxy.html">vcSet</a></span><span class="op">(</span><span class="va">proxy</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>dateMin <span class="op">=</span> <span class="va">input</span><span class="op">$</span><span class="va">start</span><span class="op">)</span><span class="op">)</span>   <span class="co"># apply new options</span></span>
@@ -223,12 +256,12 @@ methods</a>:</p>
 <p><code>reset</code> says what should be thrown away when the change is
 applied — any of <code>year</code>, <code>month</code>,
 <code>dates</code>, <code>time</code>, <code>locale</code>:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># clear the selection as well as changing the options</span></span>
 <span><span class="fu"><a href="../reference/VanillaCalendarProxy.html">vcSet</a></span><span class="op">(</span><span class="va">proxy</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>selectedDates <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>, reset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>dates <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>Inside a Shiny module, build the proxy with the <em>unnamespaced</em>
 id; it uses the session to work out the full one:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">calendarServer</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">id</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/moduleServer.html" class="external-link">moduleServer</a></span><span class="op">(</span><span class="va">id</span>, <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span>, <span class="va">session</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="va">output</span><span class="op">$</span><span class="va">cal</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/VanillaCalendar-shiny.html">renderVanillaCalendar</a></span><span class="op">(</span><span class="fu"><a href="../reference/VanillaCalendar.html">VanillaCalendar</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
@@ -242,7 +275,7 @@ id; it uses the session to work out the full one:</p>
 <p>The two pieces together — options from R, applied by proxy — give the
 common “end date cannot be before start date” behaviour without any
 re-rendering:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">server</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span>, <span class="va">session</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">output</span><span class="op">$</span><span class="va">start</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/VanillaCalendar-shiny.html">renderVanillaCalendar</a></span><span class="op">(</span></span>
 <span>    <span class="fu"><a href="../reference/VanillaCalendar.html">VanillaCalendar</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>inputMode <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, height <span class="op">=</span> <span class="st">"auto"</span><span class="op">)</span></span>
@@ -262,7 +295,7 @@ re-rendering:</p>
 <p>Any option that takes a function takes one here too, through
 <code><a href="https://rdrr.io/pkg/htmlwidgets/man/JS.html" class="external-link">htmlwidgets::JS()</a></code>. Your callback runs in addition to the
 built-in one, so the Shiny inputs above keep working:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/VanillaCalendar.html">VanillaCalendar</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>  selectionDatesMode <span class="op">=</span> <span class="st">"multiple"</span>,</span>
 <span>  onClickDate <span class="op">=</span> <span class="fu">htmlwidgets</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/htmlwidgets/man/JS.html" class="external-link">JS</a></span><span class="op">(</span></span>
@@ -283,7 +316,7 @@ reference</a>.</p>
 fixed choice, reading the attribute named by
 <code>themeAttrDetect</code>. bslib writes <code>data-bs-theme</code>,
 so:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/VanillaCalendar.html">VanillaCalendar</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>  selectedTheme <span class="op">=</span> <span class="st">"system"</span>,</span>
 <span>  themeAttrDetect <span class="op">=</span> <span class="st">"html[data-bs-theme]"</span></span>

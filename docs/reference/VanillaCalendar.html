@@ -68,7 +68,10 @@ unknown names raise a warning. <code>Date</code> and <code>POSIXct</code> values
 the <code>"YYYY-MM-DD"</code> strings the library expects, and options that must be
 arrays (such as <code>selectedDates</code>) are boxed for you, so a single date works.
 JavaScript callbacks can be supplied with <code><a href="https://rdrr.io/pkg/htmlwidgets/man/JS.html" class="external-link">htmlwidgets::JS()</a></code>; they run in
-addition to, not instead of, the Shiny inputs described below.</p></dd>
+addition to, not instead of, the Shiny inputs described below. Note that
+options keep the library's own conventions, so <code>selectedMonth</code> counts
+months from 0 (<code>11</code> is December) even though <code>input$&lt;id&gt;_selected_month</code>
+is reported to R as 1-12.</p></dd>
 
 
 <dt id="arg-width-height">width, height<a class="anchor" aria-label="anchor" href="#arg-width-height"></a></dt>

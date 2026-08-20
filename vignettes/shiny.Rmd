@@ -12,35 +12,67 @@ knitr::opts_chunk$set(collapse = TRUE, comment = "#>", eval = FALSE)
 ```
 
 The code here is not run when the vignette is built, because it needs a running
-Shiny app. Everything in it comes from the demo app that ships with the
-package, which you can run yourself:
+Shiny app. Both apps it draws on ship with the package, so you can run them
+before writing anything yourself:
 
 ```{r}
+# the smallest useful app, reproduced in full below
+shiny::runApp(system.file("examples/minimal", package = "VanillaCalendar"))
+
+# a tour of everything else on this page
 shiny::runApp(system.file("examples/gallery", package = "VanillaCalendar"))
 ```
 
-## The pair of functions
+## The smallest app that works
 
-A calendar goes in the UI with `VanillaCalendarOutput()` and is filled in the
-server with `renderVanillaCalendar()`, like any other htmlwidget.
+There are three steps, and they are the same three as for any htmlwidget:
+
+1. `VanillaCalendarOutput("cal")` in the UI, to say where the calendar goes.
+2. `renderVanillaCalendar()` in the server, to build it.
+3. Read what the user picked from `input$cal_selected`.
+
+That is the whole app:
 
 ```{r}
 library(shiny)
 library(VanillaCalendar)
 
 ui <- fluidPage(
+  titlePanel("Pick a date"),
   VanillaCalendarOutput("cal", height = "400px"),
-  verbatimTextOutput("picked")
+  textOutput("chosen")
 )
 
 server <- function(input, output) {
-  output$cal <- renderVanillaCalendar(
-    VanillaCalendar(list(locale = "en", selectionDatesMode = "multiple"))
-  )
-  output$picked <- renderPrint(input$cal_selected)
+  output$cal <- renderVanillaCalendar(VanillaCalendar())
+  output$chosen <- renderText({
+    if (length(input$cal_selected) == 0) "Nothing picked yet."
+    else format(input$cal_selected, "%A, %d %B %Y")
+  })
 }
 
 shinyApp(ui, server)
+```
+
+Nothing above is specific to this widget except the two function names. What
+the calendar *does* is decided by the options you pass, and the structure stays
+as it is:
+
+```{r}
+# let the user drag out a range
+output$cal <- renderVanillaCalendar(
+  VanillaCalendar(list(selectionDatesMode = "multiple-ranged"))
+)
+
+# or make it a text box with a popup, for a form
+output$cal <- renderVanillaCalendar(
+  VanillaCalendar(list(inputMode = TRUE), height = "auto")
+)
+
+# or add a time picker under the dates
+output$cal <- renderVanillaCalendar(
+  VanillaCalendar(list(selectionTimeMode = 24), height = "440px")
+)
 ```
 
 ## Reading what the user did

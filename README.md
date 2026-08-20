@@ -48,29 +48,54 @@ warn rather than being silently ignored.
 
 ## In Shiny
 
+Three steps: `VanillaCalendarOutput()` in the UI, `renderVanillaCalendar()` in
+the server, and read the dates from `input$<id>_selected`. That is a complete
+app:
+
 ```r
 library(shiny)
 library(VanillaCalendar)
 
 ui <- fluidPage(
-  VanillaCalendarOutput("cal"),
-  verbatimTextOutput("picked")
+  titlePanel("Pick a date"),
+  VanillaCalendarOutput("cal", height = "400px"),
+  textOutput("chosen")
 )
 
 server <- function(input, output) {
-  output$cal <- renderVanillaCalendar(
-    VanillaCalendar(list(selectionDatesMode = "multiple"))
-  )
-  output$picked <- renderPrint(input$cal_selected)
+  output$cal <- renderVanillaCalendar(VanillaCalendar())
+  output$chosen <- renderText({
+    if (length(input$cal_selected) == 0) "Nothing picked yet."
+    else format(input$cal_selected, "%A, %d %B %Y")
+  })
 }
 
 shinyApp(ui, server)
 ```
 
-Every screenshot below comes from the bundled demo app, which you can run
-yourself:
+`input$cal_selected` is a `Date` vector — `Date(0)` when nothing is selected,
+so `format()` and `min()` never blow up on an empty calendar. Options change
+what the user can do without changing any of the structure above:
 
 ```r
+# a date range instead of one date
+output$cal <- renderVanillaCalendar(
+  VanillaCalendar(list(selectionDatesMode = "multiple-ranged"))
+)
+
+# a text box with a popup, instead of a block of calendar
+output$cal <- renderVanillaCalendar(
+  VanillaCalendar(list(inputMode = TRUE), height = "auto")
+)
+```
+
+Both apps ship with the package, so you can run them before writing anything:
+
+```r
+# the app above, in full
+shiny::runApp(system.file("examples/minimal", package = "VanillaCalendar"))
+
+# the demo every screenshot below comes from
 shiny::runApp(system.file("examples/gallery", package = "VanillaCalendar"))
 ```
 
