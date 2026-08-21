@@ -4,8 +4,8 @@ Version: 1.0.0
 Authors@R: c(
     person(given = "Xavier", family = "Escribà Montagut", email = "xavier.escriba.montagut@gmail.com", role = c("aut", "cre")),
     person(given = "Yury", family = "Uvarov", role = c("ctb", "cph"),
-           comment = "Author of the bundled Vanilla Calendar Pro JavaScript library"))
-Description: An R interface to the 'Vanilla Calendar Pro' JavaScript library
+           comment = "Author of the bundled 'Vanilla Calendar Pro' library"))
+Description: An R interface to the 'Vanilla Calendar Pro' 'JavaScript' library
     (version 3.2.0, bundled) for creating interactive and customizable calendar
     widgets and date pickers. The package enables integration of modern calendar
     components in R and 'Shiny' applications, with support for date, month, year
