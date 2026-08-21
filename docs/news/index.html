@@ -57,7 +57,7 @@
 <p>Upgrade to Vanilla Calendar Pro 3.2.0, whose options are flat rather than nested. This is a breaking change.</p>
 <div class="section level3">
 <h3 id="breaking-changes-2-0-0">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-2-0-0"></a></h3>
-<ul><li>The bundled library moves from 2.9.3 to 3.2.0. Options are no longer nested under <code>settings</code>: <code>settings$lang</code> is now <code>locale</code>, <code>settings$selection$day</code> is now <code>selectionDatesMode</code>, and <code>settings$visibility$theme</code> is now <code>selectedTheme</code>. See the <a href="https://vanilla-calendar.pro/docs/reference/additionally/settings" class="external-link">upstream reference</a>. Unknown option names now raise a warning instead of being silently ignored.</li>
+<ul><li>The bundled library moves from 2.9.3 to 3.2.0. Options are no longer nested under <code>settings</code>: <code>settings$lang</code> is now <code>locale</code>, <code>settings$selection$day</code> is now <code>selectionDatesMode</code>, and <code>settings$visibility$theme</code> is now <code>selectedTheme</code>. See the <a href="https://vanilla-calendar.pro/docs/reference/settings" class="external-link">upstream reference</a>. Unknown option names now raise a warning instead of being silently ignored.</li>
 <li>
 <code>input$&lt;id&gt;_selected</code> is now a <code>Date</code> vector rather than a character vector, and is <code>Date(0)</code> rather than <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code> when nothing is selected.</li>
 <li>

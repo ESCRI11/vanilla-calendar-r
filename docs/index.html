@@ -76,7 +76,7 @@
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ESCRI11/vanilla-calendar-r" class="external-link">VanillaCalendar</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="reference/VanillaCalendar.html">VanillaCalendar</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p>Any option from the <a href="https://vanilla-calendar.pro/docs/reference/additionally/settings" class="external-link">Vanilla Calendar Pro reference</a> is passed straight through as a named list:</p>
+<p>Any option from the <a href="https://vanilla-calendar.pro/docs/reference/settings" class="external-link">Vanilla Calendar Pro reference</a> is passed straight through as a named list:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/VanillaCalendar.html">VanillaCalendar</a></span><span class="op">(</span></span>
 <span>  options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
@@ -148,7 +148,7 @@
 <div class="section level3">
 <h3 id="a-date-picker-not-a-wall-of-calendar">A date picker, not a wall of calendar<a class="anchor" aria-label="anchor" href="#a-date-picker-not-a-wall-of-calendar"></a>
 </h3>
-<p>Set <code>inputMode = TRUE</code> and the widget renders a text box that opens the calendar as a popup, filling the box with the chosen date. Pair it with <code>height = "auto"</code>. See the upstream <a href="https://vanilla-calendar.pro/docs/reference/additionally/settings" class="external-link">input mode docs</a>.</p>
+<p>Set <code>inputMode = TRUE</code> and the widget renders a text box that opens the calendar as a popup, filling the box with the chosen date. Pair it with <code>height = "auto"</code>. See the upstream <a href="https://vanilla-calendar.pro/docs/reference/settings" class="external-link">input mode docs</a>.</p>
 <div class="float">
 <img src="reference/figures/input-mode.gif" alt="Clicking the box opens a popup calendar and fills in the date"><div class="figcaption">Clicking the box opens a popup calendar and fills in the date</div>
 </div>
@@ -187,7 +187,7 @@
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/observeEvent.html" class="external-link">observeEvent</a></span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">theme</span>, <span class="op">{</span></span>
 <span>  <span class="fu"><a href="reference/VanillaCalendarProxy.html">vcSet</a></span><span class="op">(</span><span class="fu"><a href="reference/VanillaCalendarProxy.html">VanillaCalendarProxy</a></span><span class="op">(</span><span class="st">"cal"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>selectedTheme <span class="op">=</span> <span class="va">input</span><span class="op">$</span><span class="va">theme</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span><span class="op">)</span></span></code></pre></div>
-<p>The proxy verbs mirror the library’s <a href="https://vanilla-calendar.pro/docs/reference/additionally/methods" class="external-link">instance methods</a>:</p>
+<p>The proxy verbs mirror the library’s <a href="https://vanilla-calendar.pro/docs/reference/methods" class="external-link">instance methods</a>:</p>
 <table class="table">
 <thead><tr class="header">
 <th>Function</th>
@@ -283,7 +283,7 @@
 <code class="sourceCode R"><span><span class="fu"><a href="reference/VanillaCalendar.html">VanillaCalendar</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>  onClickDate <span class="op">=</span> <span class="fu">htmlwidgets</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/htmlwidgets/man/JS.html" class="external-link">JS</a></span><span class="op">(</span><span class="st">"function(self) { console.log(self.context.selectedDates); }"</span><span class="op">)</span></span>
 <span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>The full callback list — <code>onClickWeekDay</code>, <code>onCreateDateEls</code>, <code>onChangeTime</code> and the rest — is in the <a href="https://vanilla-calendar.pro/docs/reference/additionally/settings" class="external-link">upstream reference</a>.</p>
+<p>The full callback list — <code>onClickWeekDay</code>, <code>onCreateDateEls</code>, <code>onChangeTime</code> and the rest — is in the <a href="https://vanilla-calendar.pro/docs/reference/actions" class="external-link">upstream reference</a>.</p>
 </div>
 <div class="section level2">
 <h2 id="learn-more">Learn more<a class="anchor" aria-label="anchor" href="#learn-more"></a>

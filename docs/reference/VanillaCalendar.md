@@ -20,9 +20,9 @@ VanillaCalendar(
 
   A named list of Vanilla Calendar Pro options, passed to the JavaScript
   library. Every option documented in the [upstream
-  reference](https://vanilla-calendar.pro/docs/reference/additionally/settings)
-  is accepted; names are validated against the bundled library version
-  and unknown names raise a warning. `Date` and `POSIXct` values are
+  reference](https://vanilla-calendar.pro/docs/reference/settings) is
+  accepted; names are validated against the bundled library version and
+  unknown names raise a warning. `Date` and `POSIXct` values are
   converted to the `"YYYY-MM-DD"` strings the library expects, and
   options that must be arrays (such as `selectedDates`) are boxed for
   you, so a single date works. JavaScript callbacks can be supplied with
@@ -86,8 +86,8 @@ For an output with id `"cal"`:
 
 With `options = list(inputMode = TRUE)` the widget renders a text input
 and shows the calendar as a popup, the behaviour documented under [input
-mode](https://vanilla-calendar.pro/docs/reference/additionally/settings)
-upstream. Pair it with `height = "auto"`.
+mode](https://vanilla-calendar.pro/docs/reference/settings) upstream.
+Pair it with `height = "auto"`.
 
 ## Theming
 
@@ -122,7 +122,7 @@ VanillaCalendar(
   height = "400px"
 )
 
-{"x":{"options":{"type":"default","locale":"en","selectionDatesMode":"multiple","selectedDates":["2026-08-20"],"selectedTheme":"light"}},"evals":[],"jsHooks":[]}
+{"x":{"options":{"type":"default","locale":"en","selectionDatesMode":"multiple","selectedDates":["2026-08-21"],"selectedTheme":"light"}},"evals":[],"jsHooks":[]}
 # Date picker attached to a text input
 VanillaCalendar(
   options = list(inputMode = TRUE, selectionDatesMode = "single"),

@@ -12,12 +12,12 @@
 Source:
 [`DESCRIPTION`](https://github.com/ESCRI11/vanilla-calendar-r/blob/HEAD/DESCRIPTION)
 
-Escribà Montagut X (2026). *VanillaCalendar: Interactive Calendar Widget
-for R and Shiny*. R package version 2.0.1,
+Escribà Montagut X (2026). *VanillaCalendar: Interactive Calendar and
+Date Picker Widget*. R package version 2.0.1,
 <https://github.com/ESCRI11/vanilla-calendar-r>.
 
     @Manual{,
-      title = {VanillaCalendar: Interactive Calendar Widget for R and Shiny},
+      title = {VanillaCalendar: Interactive Calendar and Date Picker Widget},
       author = {Xavier {Escribà Montagut}},
       year = {2026},
       note = {R package version 2.0.1},

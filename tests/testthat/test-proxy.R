@@ -1,3 +1,7 @@
+# The proxy is only reachable from a Shiny session, so the whole file goes
+# when Shiny is not installed.
+skip_if_not_installed("shiny")
+
 fake_session <- function() {
   sent <- list()
   list(
@@ -11,7 +15,6 @@ fake_session <- function() {
 }
 
 test_that("the proxy needs a session", {
-  skip_if_not_installed("shiny")
   expect_error(VanillaCalendarProxy("cal", session = NULL), "Shiny session")
 })
 

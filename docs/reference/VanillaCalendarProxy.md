@@ -4,8 +4,8 @@
 rendered, so that it can be changed without re-rendering it — the
 calendar keeps its position, focus and selection instead of flickering
 back to its initial state. The methods map onto the [Calendar instance
-methods](https://vanilla-calendar.pro/docs/reference/additionally/methods)
-of Vanilla Calendar Pro.
+methods](https://vanilla-calendar.pro/docs/reference/methods) of Vanilla
+Calendar Pro.
 
 `vcSet()` applies new options to the calendar.
 

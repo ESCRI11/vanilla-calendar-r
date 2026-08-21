@@ -42,7 +42,7 @@ than nested. This is a breaking change.
   nested under `settings`: `settings$lang` is now `locale`,
   `settings$selection$day` is now `selectionDatesMode`, and
   `settings$visibility$theme` is now `selectedTheme`. See the [upstream
-  reference](https://vanilla-calendar.pro/docs/reference/additionally/settings).
+  reference](https://vanilla-calendar.pro/docs/reference/settings).
   Unknown option names now raise a warning instead of being silently
   ignored.
 - `input$<id>_selected` is now a `Date` vector rather than a character

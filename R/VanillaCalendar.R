@@ -5,7 +5,7 @@
 #'
 #' @param options A named list of Vanilla Calendar Pro options, passed to the
 #'   JavaScript library. Every option documented in the
-#'   [upstream reference](https://vanilla-calendar.pro/docs/reference/additionally/settings)
+#'   [upstream reference](https://vanilla-calendar.pro/docs/reference/settings)
 #'   is accepted; names are validated against the bundled library version and
 #'   unknown names raise a warning. `Date` and `POSIXct` values are converted to
 #'   the `"YYYY-MM-DD"` strings the library expects, and options that must be
@@ -41,7 +41,7 @@
 #' @section Input mode:
 #' With `options = list(inputMode = TRUE)` the widget renders a text input and
 #' shows the calendar as a popup, the behaviour documented under
-#' [input mode](https://vanilla-calendar.pro/docs/reference/additionally/settings)
+#' [input mode](https://vanilla-calendar.pro/docs/reference/settings)
 #' upstream. Pair it with `height = "auto"`.
 #'
 #' @section Theming:

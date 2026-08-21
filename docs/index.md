@@ -28,8 +28,8 @@ VanillaCalendar()
 ```
 
 Any option from the [Vanilla Calendar Pro
-reference](https://vanilla-calendar.pro/docs/reference/additionally/settings)
-is passed straight through as a named list:
+reference](https://vanilla-calendar.pro/docs/reference/settings) is
+passed straight through as a named list:
 
 ``` r
 VanillaCalendar(
@@ -135,7 +135,7 @@ output$out <- renderText(paste(format(input$cal_selected), collapse = " to "))
 Set `inputMode = TRUE` and the widget renders a text box that opens the
 calendar as a popup, filling the box with the chosen date. Pair it with
 `height = "auto"`. See the upstream [input mode
-docs](https://vanilla-calendar.pro/docs/reference/additionally/settings).
+docs](https://vanilla-calendar.pro/docs/reference/settings).
 
 ![Clicking the box opens a popup calendar and fills in the
 date](reference/figures/input-mode.gif)
@@ -195,7 +195,7 @@ observeEvent(input$theme, {
 ```
 
 The proxy verbs mirror the library’s [instance
-methods](https://vanilla-calendar.pro/docs/reference/additionally/methods):
+methods](https://vanilla-calendar.pro/docs/reference/methods):
 
 | Function                          | Does                               |
 |-----------------------------------|------------------------------------|
@@ -238,7 +238,7 @@ VanillaCalendar(list(
 
 The full callback list — `onClickWeekDay`, `onCreateDateEls`,
 `onChangeTime` and the rest — is in the [upstream
-reference](https://vanilla-calendar.pro/docs/reference/additionally/settings).
+reference](https://vanilla-calendar.pro/docs/reference/actions).
 
 ## Learn more
 

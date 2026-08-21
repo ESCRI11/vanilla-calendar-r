@@ -28,7 +28,7 @@ VanillaCalendar()
 ```
 
 The options are the ones in the
-[Vanilla Calendar Pro reference](https://vanilla-calendar.pro/docs/reference/additionally/settings),
+[Vanilla Calendar Pro reference](https://vanilla-calendar.pro/docs/reference/settings),
 written exactly as they are documented there. Nothing is renamed, so when you
 read the upstream docs you can use what you find directly.
 

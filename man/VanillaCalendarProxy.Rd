@@ -47,7 +47,7 @@ The proxy object, invisibly, so calls can be piped.
 rendered, so that it can be changed without re-rendering it — the calendar
 keeps its position, focus and selection instead of flickering back to its
 initial state. The methods map onto the
-\href{https://vanilla-calendar.pro/docs/reference/additionally/methods}{Calendar instance methods}
+\href{https://vanilla-calendar.pro/docs/reference/methods}{Calendar instance methods}
 of Vanilla Calendar Pro.
 
 \code{vcSet()} applies new options to the calendar.

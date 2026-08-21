@@ -14,7 +14,7 @@ VanillaCalendar(
 \arguments{
 \item{options}{A named list of Vanilla Calendar Pro options, passed to the
 JavaScript library. Every option documented in the
-\href{https://vanilla-calendar.pro/docs/reference/additionally/settings}{upstream reference}
+\href{https://vanilla-calendar.pro/docs/reference/settings}{upstream reference}
 is accepted; names are validated against the bundled library version and
 unknown names raise a warning. \code{Date} and \code{POSIXct} values are converted to
 the \code{"YYYY-MM-DD"} strings the library expects, and options that must be
@@ -62,7 +62,7 @@ For an output with id \code{"cal"}:
 
 With \code{options = list(inputMode = TRUE)} the widget renders a text input and
 shows the calendar as a popup, the behaviour documented under
-\href{https://vanilla-calendar.pro/docs/reference/additionally/settings}{input mode}
+\href{https://vanilla-calendar.pro/docs/reference/settings}{input mode}
 upstream. Pair it with \code{height = "auto"}.
 }
 

@@ -150,7 +150,7 @@ place](../reference/figures/themes.gif)
 Switching the theme from the server, in place
 
 The verbs map onto the library’s [instance
-methods](https://vanilla-calendar.pro/docs/reference/additionally/methods):
+methods](https://vanilla-calendar.pro/docs/reference/methods):
 
 ``` r
 proxy <- VanillaCalendarProxy("cal")
@@ -226,7 +226,7 @@ VanillaCalendar(list(
 
 The callback signatures, and the `self.context` fields they can read,
 are in the [upstream
-reference](https://vanilla-calendar.pro/docs/reference/additionally/settings).
+reference](https://vanilla-calendar.pro/docs/reference/actions).
 
 ## Theming with bslib
 

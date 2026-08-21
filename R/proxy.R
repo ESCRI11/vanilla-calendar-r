@@ -4,7 +4,7 @@
 #' rendered, so that it can be changed without re-rendering it — the calendar
 #' keeps its position, focus and selection instead of flickering back to its
 #' initial state. The methods map onto the
-#' [Calendar instance methods](https://vanilla-calendar.pro/docs/reference/additionally/methods)
+#' [Calendar instance methods](https://vanilla-calendar.pro/docs/reference/methods)
 #' of Vanilla Calendar Pro.
 #'
 #' @param id The output id of the calendar, as used in

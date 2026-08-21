@@ -62,7 +62,7 @@ date picker for use in R, R Markdown and Shiny applications.</p>
 <dl><dt id="arg-options">options<a class="anchor" aria-label="anchor" href="#arg-options"></a></dt>
 <dd><p>A named list of Vanilla Calendar Pro options, passed to the
 JavaScript library. Every option documented in the
-<a href="https://vanilla-calendar.pro/docs/reference/additionally/settings" class="external-link">upstream reference</a>
+<a href="https://vanilla-calendar.pro/docs/reference/settings" class="external-link">upstream reference</a>
 is accepted; names are validated against the bundled library version and
 unknown names raise a warning. <code>Date</code> and <code>POSIXct</code> values are converted to
 the <code>"YYYY-MM-DD"</code> strings the library expects, and options that must be
@@ -127,7 +127,7 @@ For an output with id <code>"cal"</code>:</p>
 
 <p>With <code>options = list(inputMode = TRUE)</code> the widget renders a text input and
 shows the calendar as a popup, the behaviour documented under
-<a href="https://vanilla-calendar.pro/docs/reference/additionally/settings" class="external-link">input mode</a>
+<a href="https://vanilla-calendar.pro/docs/reference/settings" class="external-link">input mode</a>
 upstream. Pair it with <code>height = "auto"</code>.</p>
     </div>
     <div class="section level2">
@@ -163,7 +163,7 @@ defaults to <code>"html[data-theme]"</code>. Shiny apps using <span class="pkg">
 <span class="r-in"><span>  height <span class="op">=</span> <span class="st">"400px"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <div id="htmlwidget-e5c8c404fe174e4c81bd" style="width:500px;height:400px;" class="VanillaCalendar html-widget"></div>
-<script type="application/json" data-for="htmlwidget-e5c8c404fe174e4c81bd">{"x":{"options":{"type":"default","locale":"en","selectionDatesMode":"multiple","selectedDates":["2026-08-20"],"selectedTheme":"light"}},"evals":[],"jsHooks":[]}</script><span class="r-in"><span></span></span>
+<script type="application/json" data-for="htmlwidget-e5c8c404fe174e4c81bd">{"x":{"options":{"type":"default","locale":"en","selectionDatesMode":"multiple","selectedDates":["2026-08-21"],"selectedTheme":"light"}},"evals":[],"jsHooks":[]}</script><span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Date picker attached to a text input</span></span></span>
 <span class="r-in"><span><span class="fu">VanillaCalendar</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>inputMode <span class="op">=</span> <span class="cn">TRUE</span>, selectionDatesMode <span class="op">=</span> <span class="st">"single"</span><span class="op">)</span>,</span></span>
