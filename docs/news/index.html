@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">VanillaCalendar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -38,59 +38,22 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="2.0.1" id="vanillacalendar-201">VanillaCalendar 2.0.1<a class="anchor" aria-label="anchor" href="#vanillacalendar-201"></a></h2>
-<p>Fixes found by auditing the 2.0.0 release against the library it wraps.</p>
-<ul><li>Re-rendering a calendar left it detached from the page: the calendar disappeared for the rest of the session and every later proxy call silently did nothing. The library’s <code>destroy()</code> replaces the widget element with a clone of it, which the widget now puts back. <code><a href="../reference/VanillaCalendarProxy.html">vcDestroy()</a></code> followed by a re-render works too.</li>
-<li>
-<code><a href="../reference/VanillaCalendarProxy.html">vcSet()</a></code> and <code><a href="../reference/VanillaCalendarProxy.html">vcUpdate()</a></code> reset the selection, displayed month, year, time and locale on every call, because that is the library’s default. They now reset only the parts you are actually setting, which is what the documentation always claimed: changing the theme no longer clears the user’s dates. Pass <code>reset</code> to clear something you are not setting.</li>
-<li>
-<code>positionToInput = "auto"</code> (and <code>"left"</code>, <code>"center"</code>, <code>"right"</code>) was wrapped in an array, which the library does not accept, leaving popups positioned at <code>NaN</code>. Only the two-element form is an array.</li>
-<li>
-<code>input$&lt;id&gt;_displayed</code> was only updated by the arrows, so it went stale and reported the wrong month once the month or year picker was used.</li>
-<li>
-<code><a href="../reference/VanillaCalendarProxy.html">vcSet()</a></code> now warns when passed an <code><a href="https://rdrr.io/pkg/htmlwidgets/man/JS.html" class="external-link">htmlwidgets::JS()</a></code> callback instead of silently sending it as a dead string, which also disabled the matching Shiny input.</li>
-<li>
-<code>input$&lt;id&gt;_ready</code> fires again after a re-render.</li>
-</ul></div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="2.0.0" id="vanillacalendar-200">VanillaCalendar 2.0.0<a class="anchor" aria-label="anchor" href="#vanillacalendar-200"></a></h2>
-<p>Upgrade to Vanilla Calendar Pro 3.2.0, whose options are flat rather than nested. This is a breaking change.</p>
-<div class="section level3">
-<h3 id="breaking-changes-2-0-0">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-2-0-0"></a></h3>
-<ul><li>The bundled library moves from 2.9.3 to 3.2.0. Options are no longer nested under <code>settings</code>: <code>settings$lang</code> is now <code>locale</code>, <code>settings$selection$day</code> is now <code>selectionDatesMode</code>, and <code>settings$visibility$theme</code> is now <code>selectedTheme</code>. See the <a href="https://vanilla-calendar.pro/docs/reference/settings" class="external-link">upstream reference</a>. Unknown option names now raise a warning instead of being silently ignored.</li>
-<li>
-<code>input$&lt;id&gt;_selected</code> is now a <code>Date</code> vector rather than a character vector, and is <code>Date(0)</code> rather than <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code> when nothing is selected.</li>
-<li>
-<code>input$&lt;id&gt;_selected_month</code> is now 1-12 rather than the JavaScript 0-11.</li>
-<li>
-<code>input$&lt;id&gt;_selected_arrow</code> is renamed to <code>input$&lt;id&gt;_displayed</code> and is a <code>Date</code> (the first day of the displayed month) rather than an unpadded string.</li>
-<li>
-<code><a href="../reference/VanillaCalendar-shiny.html">VanillaCalendarOutput()</a></code> defaults to <code>width = "100%"</code> rather than <code>"1000px"</code>.</li>
-</ul></div>
-<div class="section level3">
-<h3 id="new-features-2-0-0">New features<a class="anchor" aria-label="anchor" href="#new-features-2-0-0"></a></h3>
-<ul><li>
-<code><a href="../reference/VanillaCalendarProxy.html">VanillaCalendarProxy()</a></code> with <code><a href="../reference/VanillaCalendarProxy.html">vcSet()</a></code>, <code><a href="../reference/VanillaCalendarProxy.html">vcUpdate()</a></code>, <code><a href="../reference/VanillaCalendarProxy.html">vcShow()</a></code>, <code><a href="../reference/VanillaCalendarProxy.html">vcHide()</a></code> and <code><a href="../reference/VanillaCalendarProxy.html">vcDestroy()</a></code> change a rendered calendar in place from the Shiny server, without re-rendering it.</li>
-<li>
-<code>inputMode = TRUE</code> renders a text input with a popup calendar.</li>
-<li>New Shiny inputs: <code>input$&lt;id&gt;_time</code> (time selection), <code>input$&lt;id&gt;_week</code> (week number clicks) and <code>input$&lt;id&gt;_ready</code> (calendar initialised).</li>
-<li>
-<code>Date</code> and <code>POSIXct</code> values in <code>options</code> are converted to the <code>"YYYY-MM-DD"</code> strings the library expects, and options that must be JSON arrays are boxed, so <code>selectedDates = Sys.Date()</code> works.</li>
-<li>
-<code>options</code> defaults to <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code>, so <code><a href="../reference/VanillaCalendar.html">VanillaCalendar()</a></code> renders a calendar.</li>
-<li>Callbacks supplied with <code><a href="https://rdrr.io/pkg/htmlwidgets/man/JS.html" class="external-link">htmlwidgets::JS()</a></code> now run in addition to the built-in Shiny handlers rather than replacing them.</li>
-</ul></div>
-<div class="section level3">
-<h3 id="bug-fixes-2-0-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-2-0-0"></a></h3>
-<ul><li>Clicking a date outside Shiny (RStudio viewer, R Markdown) no longer throws <code>Shiny is not defined</code>.</li>
-<li>Re-rendering a calendar destroys the previous instance instead of leaving stale event handlers behind.</li>
-<li>Repeated identical selections are sent to Shiny with event priority, so they are no longer swallowed by deduplication.</li>
-</ul></div>
-</div>
-    <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.0.0" id="vanillacalendar-100">VanillaCalendar 1.0.0<a class="anchor" aria-label="anchor" href="#vanillacalendar-100"></a></h2>
-<ul><li>First release, bundling Vanilla Calendar Pro 2.9.3.</li>
-</ul></div>
+<p>First release.</p>
+<ul><li>
+<code><a href="../reference/VanillaCalendar.html">VanillaCalendar()</a></code> creates a calendar, date picker or time picker from a list of <a href="https://vanilla-calendar.pro/docs/reference/settings" class="external-link">Vanilla Calendar Pro options</a>, bundling version 3.2.0 of the library. <code>Date</code> and <code>POSIXct</code> values are converted to the strings it expects, options that must be JSON arrays are boxed, and unknown option names warn.</li>
+<li>
+<code><a href="../reference/VanillaCalendar-shiny.html">VanillaCalendarOutput()</a></code> and <code><a href="../reference/VanillaCalendar-shiny.html">renderVanillaCalendar()</a></code> place a calendar in a Shiny app, reporting the selected dates, month, year, time, week number, displayed month and readiness as inputs.</li>
+<li>
+<code><a href="../reference/VanillaCalendarProxy.html">VanillaCalendarProxy()</a></code>, with <code><a href="../reference/VanillaCalendarProxy.html">vcSet()</a></code>, <code><a href="../reference/VanillaCalendarProxy.html">vcUpdate()</a></code>, <code><a href="../reference/VanillaCalendarProxy.html">vcShow()</a></code>, <code><a href="../reference/VanillaCalendarProxy.html">vcHide()</a></code> and <code><a href="../reference/VanillaCalendarProxy.html">vcDestroy()</a></code>, changes a calendar that is already on the page without re-rendering it.</li>
+<li>
+<code>inputMode = TRUE</code> renders a text box with a popup calendar.</li>
+</ul><div class="section level3">
+<h3 id="upgrading-from-the-github-only-version-1-0-0">Upgrading from the GitHub-only version<a class="anchor" aria-label="anchor" href="#upgrading-from-the-github-only-version-1-0-0"></a></h3>
+<p>Earlier versions of this package were distributed on GitHub and bundled Vanilla Calendar Pro 2.9.3, whose options were nested under <code>settings</code>. Those options no longer exist: <code>settings$lang</code> is now <code>locale</code>, <code>settings$selection$day</code> is now <code>selectionDatesMode</code>, and <code>settings$visibility$theme</code> is now <code>selectedTheme</code>. Unknown names warn rather than being ignored, so the change is visible rather than silent.</p>
+<p><code>input$&lt;id&gt;_selected</code> is now a <code>Date</code> vector rather than character, <code>input$&lt;id&gt;_selected_month</code> counts from 1 rather than 0, and <code>input$&lt;id&gt;_selected_arrow</code> is now <code>input$&lt;id&gt;_displayed</code>.</p>
+</div>
+</div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 

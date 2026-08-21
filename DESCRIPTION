@@ -1,6 +1,6 @@
 Package: VanillaCalendar
 Title: Interactive Calendar and Date Picker Widget
-Version: 2.0.1
+Version: 1.0.0
 Authors@R: c(
     person(given = "Xavier", family = "Escribà Montagut", email = "xavier.escriba.montagut@gmail.com", role = c("aut", "cre")),
     person(given = "Yury", family = "Uvarov", role = c("ctb", "cph"),

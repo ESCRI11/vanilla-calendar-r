@@ -15,7 +15,8 @@
   `inst/htmlwidgets/lib/VanillaCalendar-3.2.0/`, its author is credited as
   `ctb`/`cph` in `Authors@R`, and the bundled files are the ones distributed by
   upstream on npm.
-* The version number starts at 2.0.1 because the package was previously
-  distributed on GitHub only; 2.0.0 was the release that moved the bundled
-  library from 2.x to 3.x.
+* The unminified sources for the bundled library are included in
+  `tools/vanilla-calendar-pro-3.2.0/`, with a README recording the upstream
+  tag and the command that regenerates the bundled files. That directory is
+  not installed.
 * Tests that drive a headless browser are wrapped in `skip_on_cran()`.
